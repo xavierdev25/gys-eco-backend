@@ -1,98 +1,202 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# E-commerce Backend (Hexagonal Architecture)
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This project is a professional, fully functional backend for an e-commerce platform built with NestJS, following Hexagonal Architecture (Ports & Adapters).
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Project setup
+## 🚀 Quick Start
 
 ```bash
-$ pnpm install
+# Install dependencies
+pnpm install
+
+# Set up environment
+cp .env.example .env
+# Edit .env with your database credentials
+
+# Run database migrations
+pnpm prisma:migrate
+
+# (Optional) Seed the database
+pnpm prisma:seed
+
+# Start development server
+pnpm start:dev
+
+# Access API docs at http://localhost:3000/api/docs
 ```
 
-## Compile and run the project
+## 🏗️ Architecture Overview
+
+The project is structured to enforce separation of concerns and maintainability:
+
+- **Domain Layer** (`src/modules/*/domain`): Contains the core business logic, Entities, Value Objects, and Repository Interfaces (Ports). This layer is independent of the framework and external libraries.
+- **Application Layer** (`src/modules/*/application`): Contains Use Cases (Interactors) and DTOs. It orchestrates the domain logic and adapts data for the domain.
+- **Infrastructure Layer** (`src/modules/*/infrastructure`): Contains the implementation of the ports (Repositories, Adapters), Controllers, and framework-specific code.
+
+## ✨ Key Features
+
+- **Hexagonal Architecture**: Strict separation of layers for maintainability and testability.
+- **Authentication**: JWT Access + Refresh Token authentication.
+- **Database**: PostgreSQL with Prisma ORM.
+- **Validation**: Global ValidationPipe with DTOs using class-validator.
+- **Documentation**: Swagger UI auto-generated at `/api/docs`.
+- **Type Safety**: Full TypeScript with strict mode.
+- **Testing**: Unit tests with Jest, E2E tests with Supertest.
+- **CORS**: Configurable CORS for frontend integration.
+
+## 📦 Modules
+
+| Module       | Description                          |
+| ------------ | ------------------------------------ |
+| `auth`       | JWT authentication (login, register) |
+| `users`      | User management (CRUD operations)    |
+| `products`   | Product catalog management           |
+| `categories` | Product categories management        |
+
+## 🛠️ Setup & Installation
+
+### Prerequisites
+
+- Node.js 18+
+- PostgreSQL 14+
+- pnpm (recommended) or npm
+
+### 1. Install Dependencies
 
 ```bash
-# development
-$ pnpm run start
-
-# watch mode
-$ pnpm run start:dev
-
-# production mode
-$ pnpm run start:prod
+pnpm install
 ```
 
-## Run tests
+### 2. Environment Variables
+
+Copy `.env.example` to `.env` and configure:
 
 ```bash
-# unit tests
-$ pnpm run test
-
-# e2e tests
-$ pnpm run test:e2e
-
-# test coverage
-$ pnpm run test:cov
+cp .env.example .env
 ```
 
-## Deployment
+| Variable                         | Description                        | Default                 |
+| -------------------------------- | ---------------------------------- | ----------------------- |
+| `DATABASE_URL`                   | PostgreSQL connection string       | -                       |
+| `JWT_SECRET`                     | Secret for JWT access tokens       | -                       |
+| `JWT_EXPIRATION_SECONDS`         | Access token expiration (seconds)  | `3600` (1h)             |
+| `JWT_REFRESH_SECRET`             | Secret for JWT refresh tokens      | -                       |
+| `JWT_REFRESH_EXPIRATION_SECONDS` | Refresh token expiration (seconds) | `604800` (7d)           |
+| `PORT`                           | Server port                        | `3000`                  |
+| `FRONTEND_URL`                   | Frontend URL for CORS              | `http://localhost:3000` |
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### 3. Database Setup
 
 ```bash
-$ pnpm install -g @nestjs/mau
-$ mau deploy
+# Generate Prisma client
+pnpm prisma:generate
+
+# Run migrations
+pnpm prisma:migrate
+
+# (Optional) Seed the database
+pnpm prisma:seed
+
+# Open Prisma Studio
+pnpm prisma:studio
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### 4. Run the Application
 
-## Resources
+```bash
+# Development
+pnpm start:dev
 
-Check out a few resources that may come in handy when working with NestJS:
+# Production
+pnpm build
+pnpm start:prod
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+# Debug mode
+pnpm start:debug
+```
 
-## Support
+## 🧪 Testing
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```bash
+# Unit tests
+pnpm test
 
-## Stay in touch
+# Unit tests with watch mode
+pnpm test:watch
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+# Unit tests with coverage
+pnpm test:cov
 
-## License
+# E2E tests
+pnpm test:e2e
+```
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+## 📚 API Documentation
+
+Access Swagger UI at: `http://localhost:3000/api/docs`
+
+### API Prefix
+
+All API routes are prefixed with `/api/v1`
+
+### Main Endpoints
+
+| Method | Endpoint                | Description         |
+| ------ | ----------------------- | ------------------- |
+| `POST` | `/api/v1/auth/register` | Register new user   |
+| `POST` | `/api/v1/auth/login`    | Login user          |
+| `GET`  | `/api/v1/products`      | List all products   |
+| `POST` | `/api/v1/products`      | Create product      |
+| `GET`  | `/api/v1/categories`    | List all categories |
+| `POST` | `/api/v1/categories`    | Create category     |
+| `POST` | `/api/v1/users`         | Create user         |
+
+## 🚢 Deployment
+
+### Docker (Recommended)
+
+```dockerfile
+# Build
+docker build -t gys-eco-backend .
+
+# Run
+docker run -p 3000:3000 --env-file .env gys-eco-backend
+```
+
+### Production Checklist
+
+- [ ] Set strong `JWT_SECRET` and `JWT_REFRESH_SECRET`
+- [ ] Configure `DATABASE_URL` for production database
+- [ ] Set appropriate `FRONTEND_URL` for CORS
+- [ ] Run `pnpm build` before deployment
+- [ ] Run database migrations: `pnpm prisma:migrate deploy`
+
+## 📁 Project Structure
+
+```
+src/
+├── common/             # Shared utilities and decorators
+├── config/             # Configuration files
+├── database/           # Database module and Prisma service
+├── modules/            # Feature modules
+│   ├── auth/           # Authentication module
+│   ├── users/          # Users module
+│   ├── products/       # Products module
+│   └── categories/     # Categories module
+│       ├── application/    # Use Cases, DTOs
+│       ├── domain/         # Entities, Repository Ports
+│       └── infrastructure/ # Controllers, Repository Impl, Mappers
+├── shared/             # Shared Kernel (Base Entity, Mapper Interface)
+├── app.module.ts       # Root module
+└── main.ts             # Entry point
+```
+
+## 🎯 Architecture Benefits
+
+- **Scalability**: New features can be added as new modules without affecting existing ones.
+- **Testability**: Business logic in Domain/Application layers can be unit tested easily by mocking ports.
+- **Maintainability**: Framework dependencies are isolated in the Infrastructure layer.
+- **Independence**: Domain layer is pure TypeScript with no external dependencies.
+
+## 📝 License
+
+UNLICENSED - Private project
