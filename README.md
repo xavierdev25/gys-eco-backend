@@ -81,8 +81,20 @@ cp .env.example .env
 | `JWT_EXPIRATION_SECONDS`         | Access token expiration (seconds)  | `3600` (1h)             |
 | `JWT_REFRESH_SECRET`             | Secret for JWT refresh tokens      | -                       |
 | `JWT_REFRESH_EXPIRATION_SECONDS` | Refresh token expiration (seconds) | `604800` (7d)           |
-| `PORT`                           | Server port                        | `3000`                  |
+| `PORT`                           | Server port                        | `3001`                  |
 | `FRONTEND_URL`                   | Frontend URL for CORS              | `http://localhost:3000` |
+
+### Example .env file
+
+```env
+DATABASE_URL="postgresql://user:password@localhost:5432/gys_eco_db?schema=public"
+JWT_SECRET="your-super-secret-jwt-key-change-in-production"
+JWT_EXPIRATION_SECONDS=3600
+JWT_REFRESH_SECRET="your-super-secret-refresh-key-change-in-production"
+JWT_REFRESH_EXPIRATION_SECONDS=604800
+PORT=3001
+FRONTEND_URL="http://localhost:3000"
+```
 
 ### 3. Database Setup
 

@@ -48,12 +48,15 @@ RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nestjs
 USER nestjs
 
-# Expose port
-EXPOSE 3000
+# Expose port (backend uses 3001 to avoid conflict with frontend)
+EXPOSE 3001
+
+# Set environment variable for port
+ENV PORT=3001
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-    CMD wget --no-verbose --tries=1 --spider http://localhost:3000/api/v1 || exit 1
+    CMD wget --no-verbose --tries=1 --spider http://localhost:3001/api/v1 || exit 1
 
 # Start the application
 CMD ["node", "dist/main.js"]
