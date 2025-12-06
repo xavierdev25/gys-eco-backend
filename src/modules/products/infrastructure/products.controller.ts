@@ -16,7 +16,7 @@ export class ProductsController {
     private readonly mapper: ProductMapper,
     @Inject('ProductRepositoryPort')
     private readonly productRepository: ProductRepositoryPort,
-  ) { }
+  ) {}
 
   @Post()
   @ApiOperation({ summary: 'Create a new product' })

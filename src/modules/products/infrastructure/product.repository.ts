@@ -8,7 +8,7 @@ export class PrismaProductRepository {
   constructor(
     private readonly prisma: PrismaService,
     private readonly mapper: ProductMapper,
-  ) { }
+  ) {}
 
   async insert(entity: ProductEntity): Promise<void> {
     const record = this.mapper.toPersistence(entity);

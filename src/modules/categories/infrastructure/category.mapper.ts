@@ -6,7 +6,8 @@ import { CategoryResponseDto } from '../application/category.dto';
 
 @Injectable()
 export class CategoryMapper
-  implements Mapper<CategoryEntity, PrismaCategory, CategoryResponseDto> {
+  implements Mapper<CategoryEntity, PrismaCategory, CategoryResponseDto>
+{
   toPersistence(entity: CategoryEntity): PrismaCategory {
     const props = entity['props'];
     return {

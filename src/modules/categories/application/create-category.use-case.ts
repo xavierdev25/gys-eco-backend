@@ -8,7 +8,7 @@ export class CreateCategoryUseCase {
   constructor(
     @Inject('CategoryRepositoryPort')
     private readonly categoryRepository: CategoryRepositoryPort,
-  ) { }
+  ) {}
 
   async execute(dto: CreateCategoryDto): Promise<CategoryEntity> {
     const existing = await this.categoryRepository.findOneBySlug(dto.slug);

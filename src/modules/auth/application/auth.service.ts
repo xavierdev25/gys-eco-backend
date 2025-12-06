@@ -16,7 +16,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
     private readonly createUserUseCase: CreateUserUseCase,
     private readonly userMapper: UserMapper,
-  ) { }
+  ) {}
 
   async login(dto: LoginDto): Promise<TokenResponseDto> {
     const user = await this.userRepository.findOneByEmail(dto.email);

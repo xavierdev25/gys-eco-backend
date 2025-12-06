@@ -9,7 +9,7 @@ export class PrismaUserRepository implements UserRepositoryPort {
   constructor(
     private readonly prisma: PrismaService,
     private readonly mapper: UserMapper,
-  ) { }
+  ) {}
 
   async insert(entity: UserEntity): Promise<void> {
     const record = this.mapper.toPersistence(entity);

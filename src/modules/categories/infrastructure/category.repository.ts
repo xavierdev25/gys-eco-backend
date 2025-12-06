@@ -9,7 +9,7 @@ export class PrismaCategoryRepository {
   constructor(
     private readonly prisma: PrismaService,
     private readonly mapper: CategoryMapper,
-  ) { }
+  ) {}
 
   async insert(entity: CategoryEntity): Promise<void> {
     const record = this.mapper.toPersistence(entity);

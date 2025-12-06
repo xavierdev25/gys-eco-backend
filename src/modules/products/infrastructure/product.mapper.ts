@@ -7,7 +7,8 @@ import { ProductResponseDto } from '../application/product.dto';
 
 @Injectable()
 export class ProductMapper
-  implements Mapper<ProductEntity, PrismaProduct, ProductResponseDto> {
+  implements Mapper<ProductEntity, PrismaProduct, ProductResponseDto>
+{
   toPersistence(entity: ProductEntity): PrismaProduct {
     const props = entity['props'];
     return {

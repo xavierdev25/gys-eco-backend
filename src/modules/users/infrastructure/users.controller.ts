@@ -1,5 +1,17 @@
-import { Controller, Post, Get, Body, UseGuards, Request } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
+import {
+  Controller,
+  Post,
+  Get,
+  Body,
+  UseGuards,
+  Request,
+} from '@nestjs/common';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 import { CreateUserUseCase } from '../application/create-user/create-user.use-case';
 import { CreateUserDto } from '../application/create-user/create-user.dto';
 import { UserResponseDto } from '../application/user.dto';
@@ -38,7 +50,9 @@ export class UsersController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Get current user profile' })
   @ApiResponse({ status: 200, type: UserResponseDto })
-  async getProfile(@Request() req: AuthenticatedRequest): Promise<UserResponseDto> {
+  async getProfile(
+    @Request() req: AuthenticatedRequest,
+  ): Promise<UserResponseDto> {
     const user = await this.userRepository.findOneById(req.user.userId);
     if (!user) {
       throw new Error('User not found');

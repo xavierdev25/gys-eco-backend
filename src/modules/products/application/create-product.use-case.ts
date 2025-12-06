@@ -8,7 +8,7 @@ export class CreateProductUseCase {
   constructor(
     @Inject('ProductRepositoryPort')
     private readonly productRepository: ProductRepositoryPort,
-  ) { }
+  ) {}
 
   async execute(dto: CreateProductDto): Promise<ProductEntity> {
     // Check if slug exists logic could be added here

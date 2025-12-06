@@ -16,7 +16,7 @@ export class CategoriesController {
     private readonly mapper: CategoryMapper,
     @Inject('CategoryRepositoryPort')
     private readonly categoryRepository: CategoryRepositoryPort,
-  ) { }
+  ) {}
 
   @Post()
   @ApiOperation({ summary: 'Create a new category' })

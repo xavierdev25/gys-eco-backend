@@ -10,7 +10,7 @@ export class CreateUserUseCase {
   constructor(
     @Inject('UserRepositoryPort')
     private readonly userRepository: UserRepositoryPort,
-  ) { }
+  ) {}
 
   async execute(dto: CreateUserDto): Promise<UserEntity> {
     const existingUser = await this.userRepository.findOneByEmail(dto.email);
